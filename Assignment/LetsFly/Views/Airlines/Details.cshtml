@@ -1,0 +1,51 @@
+﻿@model LetsFly.Models.Airline
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Airline</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AirlineName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirlineName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AirlineImg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirlineImg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AirlineCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirlineCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AirlineDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirlineDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AirlineId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
