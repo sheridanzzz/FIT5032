@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using LetsFly.Models;
 
 namespace LetsFly.Models
 {
@@ -85,7 +86,6 @@ namespace LetsFly.Models
         //users date of birth
         [Required]
         [Display(Name = "Date of Birth")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 

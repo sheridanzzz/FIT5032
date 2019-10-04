@@ -103,4 +103,9 @@ C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\roslyn\System.Net.Http.dll
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\roslyn\System.Net.Sockets.dll
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\SendGrid.dll
+C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\SendGrid.pdb
+C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\SendGrid.xml
 C:\Users\sheri\source\repos\LetsFly\LetsFly\obj\Debug\LetsFly.csprojAssemblyReference.cache
+C:\Users\sheri\Desktop\FIT5032Git\FIT5032\Assignment\LetsFly\obj\Debug\LetsFly.dll
+C:\Users\sheri\Desktop\FIT5032Git\FIT5032\Assignment\LetsFly\obj\Debug\LetsFly.pdb

@@ -24,10 +24,11 @@ namespace LetsFly
 
             // I added the location.js to the bundle called mapbox.
             bundles.Add(new ScriptBundle("~/bundles/mapbox").Include(
-                "~/Scripts/location.js"));
+                "~/Scripts/location.js",
+                "~/Scripts/FlightPath.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/Yeti-bootstrap.css",
                       "~/Content/site.css"));
         }
     }

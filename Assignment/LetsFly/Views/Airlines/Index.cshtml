@@ -37,7 +37,7 @@
                     @Html.DisplayFor(modelItem => item.AirlineName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AirlineImg)
+                    <img class="img-thumbnail" src="@Url.Content("~/Uploads/" + item.AirlineImg)"/>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AirlineCode)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -48,17 +49,29 @@ namespace LetsFly.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AirlineId,AirlineName,AirlineImg,AirlineCode,AirlineDescription")] Airline airline)
+        public ActionResult Create([Bind(Include = "AirlineId,AirlineName,AirlineCode,AirlineDescription")] Airline airline, HttpPostedFileBase
+            postedFile)
         {
+            ModelState.Clear();
+            var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
+            airline.AirlineImg = myUniqueFileName;
+            TryValidateModel(airline);
             if (ModelState.IsValid)
             {
+                string serverPath = Server.MapPath("~/Uploads/");
+                string fileExtension = Path.GetExtension(postedFile.FileName);
+                string filePath = airline.AirlineImg + fileExtension;
+                airline.AirlineImg = filePath;
+                postedFile.SaveAs(serverPath + airline.AirlineImg);
                 db.Airlines.Add(airline);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+
             }
 
             return View(airline);
         }
+
 
         // GET: Airlines/Edit/5
         public ActionResult Edit(int? id)

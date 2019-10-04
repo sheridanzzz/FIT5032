@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace LetsFly.Models
 {
     using System;
@@ -22,9 +24,18 @@ namespace LetsFly.Models
         }
     
         public int AirlineId { get; set; }
+        [Required]
+        [Display(Name = "Airline Name")]
         public string AirlineName { get; set; }
+        [Required]
+        [Display(Name = "Image")]
         public string AirlineImg { get; set; }
+
+        [Required]
+        [Display(Name = "Airline Code")]
         public string AirlineCode { get; set; }
+        [Required]
+        [Display(Name = "Airline Description")]
         public string AirlineDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

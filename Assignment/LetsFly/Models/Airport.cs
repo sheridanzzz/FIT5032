@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace LetsFly.Models
 {
     using System;
@@ -15,10 +17,20 @@ namespace LetsFly.Models
     public partial class Airport
     {
         public int AirportId { get; set; }
+        [Required]
+        [Display(Name = "Airport Name")]
         public string AirportName { get; set; }
+        [Required]
+        [Display(Name = "Airport Code")]
         public string AirportCode { get; set; }
+        [Required]
+        [Display(Name = "Airport Location")]
         public string AirportLocationName { get; set; }
+        [Required]
+        [Display(Name = "Longitude")]
         public string AirportLong { get; set; }
+        [Required]
+        [Display(Name = "Latitude ")]
         public string AirportLat { get; set; }
         public Nullable<int> FlightId { get; set; }
     
