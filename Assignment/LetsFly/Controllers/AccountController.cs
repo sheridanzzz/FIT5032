@@ -157,16 +157,9 @@ namespace LetsFly.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-                 //adding data to the user table
-                    //var lfUser = new User();
-                   // lfUser.Email = model.Email;
-                   // lfUser.FirstName = model.FirstName;
-                   // lfUser.LastName = model.LastName;
-                   // lfUser.PhoneNo = model.PhoneNumber;
-                   // db.Users.Add(lfUser);
-                   // db.SaveChanges();
+               
 
-                    if (result.Succeeded)
+                if (result.Succeeded)
                 {
                     String toEmail = model.Email;
                     String subject = "Thank you for registering";
@@ -174,9 +167,23 @@ namespace LetsFly.Controllers
 
                     EmailSender es = new EmailSender();
                     es.Send(toEmail, subject, contents);
+                    ViewBag.Result = "Email has been send.";
+
+                    string currentUserId = User.Identity.GetUserId();
+                    //adding data to the user table
+                    var lfUser = new User();
+                    lfUser.UserId = user.Id;
+                    lfUser.Email = model.Email;
+                    lfUser.FirstName = model.FirstName;
+                    lfUser.LastName = model.LastName;
+                    lfUser.PhoneNo = model.PhoneNumber;
+                    lfUser.DateOfBirth = model.DateOfBirth;
+                    db.Users.Add(lfUser);
+                    db.SaveChanges();
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
+                    
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

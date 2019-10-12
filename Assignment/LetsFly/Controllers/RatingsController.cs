@@ -8,10 +8,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LetsFly.Models;
+using LetsFly.Utils;
+using Microsoft.AspNet.Identity;
 
 namespace LetsFly.Controllers
 {
-    [Authorize]
     public class RatingsController : Controller
     {
         private LetsFlyModelContainer db = new LetsFlyModelContainer();
@@ -51,10 +52,12 @@ namespace LetsFly.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RatingId,RatingNumber,RatingImg,RatingDate,RatingDescription,UserId,AirlineId")] Rating rating)
+        public ActionResult Create([Bind(Include = "RatingId,RatingNumber,RatingImg,RatingDescription,AirlineId")] Rating rating)
         {
             if (ModelState.IsValid)
             {
+                rating.UserId = User.Identity.GetUserId();
+                rating.RatingDate = DateTime.Now;
                 db.Ratings.Add(rating);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -133,6 +136,24 @@ namespace LetsFly.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult SendEmails(User model)
+        {
+            //redo
+            var data = model.Email.ToList();
+
+            foreach (var emailX in data)
+            {
+                var toEmail = emailX.ToString();
+                String subject = "Thank you for registering";
+                String contents = "Welcome to Lets Fly!";
+
+                EmailSender es = new EmailSender();
+                es.Send(toEmail, subject, contents);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

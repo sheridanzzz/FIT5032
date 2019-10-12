@@ -24,14 +24,14 @@ namespace LetsFly.Models
         public int BookingNumber { get; set; }
         public string Price { get; set; }
         public string State { get; set; }
-        public bool PaymentMade { get; set; }
+        public Nullable<bool> PaymentMade { get; set; }
         public string BillingAddress { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Passenger> Passengers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Flight> Flights { get; set; }
+        public virtual User User { get; set; }
     }
 }

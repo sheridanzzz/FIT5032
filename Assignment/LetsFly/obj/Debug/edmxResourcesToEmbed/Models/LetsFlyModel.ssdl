@@ -10,21 +10,9 @@
     <EntitySet Name="Ratings" EntityType="LetsFlyModel.Store.Ratings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Flights" EntityType="LetsFlyModel.Store.Flights" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BookingFlight" EntityType="LetsFlyModel.Store.BookingFlight" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="UserRoles" Association="LetsFlyModel.Store.UserRoles">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Roles" EntitySet="Roles" />
-    </AssociationSet>
-    <AssociationSet Name="UserBooking" Association="LetsFlyModel.Store.UserBooking">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Booking" EntitySet="Bookings" />
-    </AssociationSet>
     <AssociationSet Name="BookingPassenger" Association="LetsFlyModel.Store.BookingPassenger">
       <End Role="Booking" EntitySet="Bookings" />
       <End Role="Passenger" EntitySet="Passengers" />
-    </AssociationSet>
-    <AssociationSet Name="UserRating" Association="LetsFlyModel.Store.UserRating">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Rating" EntitySet="Ratings" />
     </AssociationSet>
     <AssociationSet Name="FK_BookingFlight_Booking" Association="LetsFlyModel.Store.FK_BookingFlight_Booking">
       <End Role="Booking" EntitySet="Bookings" />
@@ -46,37 +34,49 @@
       <End Role="Airline" EntitySet="Airlines" />
       <End Role="Flight" EntitySet="Flights" />
     </AssociationSet>
+    <AssociationSet Name="UserBooking" Association="LetsFlyModel.Store.UserBooking">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="UserRoles" Association="LetsFlyModel.Store.UserRoles">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Roles" EntitySet="Roles" />
+    </AssociationSet>
+    <AssociationSet Name="UserRating" Association="LetsFlyModel.Store.UserRating">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Rating" EntitySet="Ratings" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PhoneNo" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserImg" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneNo" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="UserImg" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
       <PropertyRef Name="RolesId" />
     </Key>
     <Property Name="RolesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoleType" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RoleType" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Bookings">
     <Key>
       <PropertyRef Name="BookingNumber" />
     </Key>
     <Property Name="BookingNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PaymentMade" Type="bit" Nullable="false" />
-    <Property Name="BillingAddress" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PaymentMade" Type="bit" Nullable="true" />
+    <Property Name="BillingAddress" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Passengers">
     <Key>
@@ -86,9 +86,9 @@
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Insurance" Type="bit" Nullable="false" />
-    <Property Name="ExtraLuggage" Type="bit" Nullable="false" />
-    <Property Name="TicketClass" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Insurance" Type="bit" Nullable="true" />
+    <Property Name="ExtraLuggage" Type="bit" Nullable="true" />
+    <Property Name="TicketClass" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PassportNo" Type="nvarchar(max)" Nullable="false" />
     <Property Name="BookingNumber" Type="int" Nullable="false" />
   </EntityType>
@@ -112,7 +112,7 @@
     <Property Name="AirlineName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AirlineImg" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AirlineCode" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="AirlineDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AirlineDescription" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="Ratings">
     <Key>
@@ -120,11 +120,11 @@
     </Key>
     <Property Name="RatingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RatingNumber" Type="int" Nullable="false" />
-    <Property Name="RatingImg" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="RatingDate" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="RatingDescription" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RatingImg" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="RatingDate" Type="datetime" Nullable="false" />
+    <Property Name="RatingDescription" Type="nvarchar(max)" Nullable="true" />
     <Property Name="AirlineId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Flights">
     <Key>
@@ -138,6 +138,8 @@
     <Property Name="Capacity" Type="int" Nullable="false" />
     <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AirlineId" Type="int" Nullable="false" />
+    <Property Name="ArrivalAirport" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DepartureAirport" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="BookingFlight">
     <Key>
@@ -147,30 +149,6 @@
     <Property Name="Bookings_BookingNumber" Type="int" Nullable="false" />
     <Property Name="Flights_FlightId" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="UserRoles">
-    <End Role="User" Type="LetsFlyModel.Store.Users" Multiplicity="1" />
-    <End Role="Roles" Type="LetsFlyModel.Store.Roles" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="Roles">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="UserBooking">
-    <End Role="User" Type="LetsFlyModel.Store.Users" Multiplicity="1" />
-    <End Role="Booking" Type="LetsFlyModel.Store.Bookings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="BookingPassenger">
     <End Role="Booking" Type="LetsFlyModel.Store.Bookings" Multiplicity="1" />
     <End Role="Passenger" Type="LetsFlyModel.Store.Passengers" Multiplicity="*" />
@@ -180,18 +158,6 @@
       </Principal>
       <Dependent Role="Passenger">
         <PropertyRef Name="BookingNumber" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="UserRating">
-    <End Role="User" Type="LetsFlyModel.Store.Users" Multiplicity="1" />
-    <End Role="Rating" Type="LetsFlyModel.Store.Ratings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="Rating">
-        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -228,6 +194,42 @@
       </Principal>
       <Dependent Role="Flight">
         <PropertyRef Name="AirlineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserBooking">
+    <End Role="User" Type="LetsFlyModel.Store.Users" Multiplicity="1" />
+    <End Role="Booking" Type="LetsFlyModel.Store.Bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserRoles">
+    <End Role="User" Type="LetsFlyModel.Store.Users" Multiplicity="1" />
+    <End Role="Roles" Type="LetsFlyModel.Store.Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Roles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserRating">
+    <End Role="User" Type="LetsFlyModel.Store.Users" Multiplicity="1" />
+    <End Role="Rating" Type="LetsFlyModel.Store.Ratings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

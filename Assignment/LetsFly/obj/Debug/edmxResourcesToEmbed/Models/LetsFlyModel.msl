@@ -8,9 +8,9 @@
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="UserImg" ColumnName="UserImg" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -82,8 +82,8 @@
           <ScalarProperty Name="RatingImg" ColumnName="RatingImg" />
           <ScalarProperty Name="RatingDate" ColumnName="RatingDate" />
           <ScalarProperty Name="RatingDescription" ColumnName="RatingDescription" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="AirlineId" ColumnName="AirlineId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -98,6 +98,8 @@
           <ScalarProperty Name="Capacity" ColumnName="Capacity" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="AirlineId" ColumnName="AirlineId" />
+          <ScalarProperty Name="ArrivalAirport" ColumnName="ArrivalAirport" />
+          <ScalarProperty Name="DepartureAirport" ColumnName="DepartureAirport" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

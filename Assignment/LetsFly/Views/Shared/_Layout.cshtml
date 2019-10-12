@@ -6,7 +6,7 @@
     <title>@ViewBag.Title - Lets Fly!</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
     @* This is for the mapbox map. *@
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
@@ -36,6 +36,7 @@
                 <li>@Html.ActionLink("Airline", "Index", "Airlines")</li>
                 <li>@Html.ActionLink("Airport", "Index", "Airports")</li>
                 <li>@Html.ActionLink("Rating", "Create", "Ratings")</li>
+                <li>@Html.ActionLink("Send Email", "Send_Email", "Home")</li>
             </ul>
             @Html.Partial("_LoginPartial")
         </div>

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/04/2019 23:46:07
+-- Date Created: 10/08/2019 22:16:20
 -- Generated from EDMX file: C:\Users\sheri\source\repos\LetsFly\LetsFly\Models\LetsFlyModel.edmx
 -- --------------------------------------------------
 
@@ -83,32 +83,32 @@ GO
 
 -- Creating table 'Users'
 CREATE TABLE [dbo].[Users] (
-    [UserId] int IDENTITY(1,1) NOT NULL,
+    [UserId] nvarchar(max)  NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [PhoneNo] nvarchar(max)  NOT NULL,
-    [Password] nvarchar(max)  NOT NULL,
-    [UserImg] nvarchar(max)  NOT NULL,
-    [Email] nvarchar(max)  NOT NULL
+    [PhoneNo] nvarchar(max)  NULL,
+    [UserImg] nvarchar(max)  NULL,
+    [Email] nvarchar(max)  NOT NULL,
+    [DateOfBirth] datetime  NULL
 );
 GO
 
 -- Creating table 'Roles'
 CREATE TABLE [dbo].[Roles] (
     [RolesId] int IDENTITY(1,1) NOT NULL,
-    [RoleType] nvarchar(max)  NOT NULL,
-    [UserId] int  NOT NULL
+    [RoleType] nvarchar(max)  NULL,
+    [UserId] nvarchar(max)  NOT NULL
 );
 GO
 
 -- Creating table 'Bookings'
 CREATE TABLE [dbo].[Bookings] (
     [BookingNumber] int IDENTITY(1,1) NOT NULL,
-    [Price] nvarchar(max)  NOT NULL,
-    [State] nvarchar(max)  NOT NULL,
-    [PaymentMade] bit  NOT NULL,
-    [BillingAddress] nvarchar(max)  NOT NULL,
-    [UserId] int  NOT NULL
+    [Price] nvarchar(max)  NULL,
+    [State] nvarchar(max)  NULL,
+    [PaymentMade] bit  NULL,
+    [BillingAddress] nvarchar(max)  NULL,
+    [UserId] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -118,9 +118,9 @@ CREATE TABLE [dbo].[Passengers] (
     [Email] nvarchar(max)  NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [Insurance] bit  NOT NULL,
-    [ExtraLuggage] bit  NOT NULL,
-    [TicketClass] nvarchar(max)  NOT NULL,
+    [Insurance] bit  NULL,
+    [ExtraLuggage] bit  NULL,
+    [TicketClass] nvarchar(max)  NULL,
     [PassportNo] nvarchar(max)  NOT NULL,
     [BookingNumber] int  NOT NULL
 );
@@ -144,7 +144,7 @@ CREATE TABLE [dbo].[Airlines] (
     [AirlineName] nvarchar(max)  NOT NULL,
     [AirlineImg] nvarchar(max)  NOT NULL,
     [AirlineCode] nvarchar(max)  NOT NULL,
-    [AirlineDescription] nvarchar(max)  NOT NULL
+    [AirlineDescription] nvarchar(max)  NULL
 );
 GO
 
@@ -152,11 +152,11 @@ GO
 CREATE TABLE [dbo].[Ratings] (
     [RatingId] int IDENTITY(1,1) NOT NULL,
     [RatingNumber] int  NOT NULL,
-    [RatingImg] nvarchar(max)  NOT NULL,
-    [RatingDate] nvarchar(max)  NOT NULL,
-    [RatingDescription] nvarchar(max)  NOT NULL,
-    [UserId] int  NOT NULL,
-    [AirlineId] int  NOT NULL
+    [RatingImg] nvarchar(max)  NULL,
+    [RatingDate] datetime  NOT NULL,
+    [RatingDescription] nvarchar(max)  NULL,
+    [AirlineId] int  NOT NULL,
+    [UserId] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -169,7 +169,9 @@ CREATE TABLE [dbo].[Flights] (
     [NomimalPrice] nvarchar(max)  NOT NULL,
     [Capacity] int  NOT NULL,
     [Duration] nvarchar(max)  NOT NULL,
-    [AirlineId] int  NOT NULL
+    [AirlineId] int  NOT NULL,
+    [ArrivalAirport] nvarchar(max)  NULL,
+    [DepartureAirport] nvarchar(max)  NULL
 );
 GO
 
@@ -242,36 +244,6 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [UserId] in table 'Roles'
-ALTER TABLE [dbo].[Roles]
-ADD CONSTRAINT [FK_UserRoles]
-    FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users]
-        ([UserId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserRoles'
-CREATE INDEX [IX_FK_UserRoles]
-ON [dbo].[Roles]
-    ([UserId]);
-GO
-
--- Creating foreign key on [UserId] in table 'Bookings'
-ALTER TABLE [dbo].[Bookings]
-ADD CONSTRAINT [FK_UserBooking]
-    FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users]
-        ([UserId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserBooking'
-CREATE INDEX [IX_FK_UserBooking]
-ON [dbo].[Bookings]
-    ([UserId]);
-GO
-
 -- Creating foreign key on [BookingNumber] in table 'Passengers'
 ALTER TABLE [dbo].[Passengers]
 ADD CONSTRAINT [FK_BookingPassenger]
@@ -285,21 +257,6 @@ GO
 CREATE INDEX [IX_FK_BookingPassenger]
 ON [dbo].[Passengers]
     ([BookingNumber]);
-GO
-
--- Creating foreign key on [UserId] in table 'Ratings'
-ALTER TABLE [dbo].[Ratings]
-ADD CONSTRAINT [FK_UserRating]
-    FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users]
-        ([UserId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserRating'
-CREATE INDEX [IX_FK_UserRating]
-ON [dbo].[Ratings]
-    ([UserId]);
 GO
 
 -- Creating foreign key on [Bookings_BookingNumber] in table 'BookingFlight'
@@ -369,6 +326,51 @@ GO
 CREATE INDEX [IX_FK_AirlineFlight]
 ON [dbo].[Flights]
     ([AirlineId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'Bookings'
+ALTER TABLE [dbo].[Bookings]
+ADD CONSTRAINT [FK_UserBooking]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[Users]
+        ([UserId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserBooking'
+CREATE INDEX [IX_FK_UserBooking]
+ON [dbo].[Bookings]
+    ([UserId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'Roles'
+ALTER TABLE [dbo].[Roles]
+ADD CONSTRAINT [FK_UserRoles]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[Users]
+        ([UserId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserRoles'
+CREATE INDEX [IX_FK_UserRoles]
+ON [dbo].[Roles]
+    ([UserId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'Ratings'
+ALTER TABLE [dbo].[Ratings]
+ADD CONSTRAINT [FK_UserRating]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[Users]
+        ([UserId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserRating'
+CREATE INDEX [IX_FK_UserRating]
+ON [dbo].[Ratings]
+    ([UserId]);
 GO
 
 -- --------------------------------------------------

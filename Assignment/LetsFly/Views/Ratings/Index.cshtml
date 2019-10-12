@@ -33,36 +33,35 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @*Html.DisplayFor(ModelItem => item.RatingDescription)*@
-            @Html.Raw(item.RatingDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RatingNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RatingImg)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RatingDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RatingDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Airline.AirlineName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.RatingId}) |
-            @Html.ActionLink("Details", "Details", new {id = item.RatingId}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.RatingId})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RatingNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RatingImg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RatingDate)
+            </td>
+            <td>
+                @*Html.DisplayFor(ModelItem => item.RatingDescription)*@
+                @Html.Raw(item.RatingDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Airline.AirlineName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.RatingId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.RatingId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.RatingId})
+            </td>
+        </tr>
+    }
 
 </table>
+
+<input type="button" value="Create" onclick="location.href = '@Url.Action("SendEmails", "Ratings")'" />

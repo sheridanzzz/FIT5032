@@ -1,0 +1,15 @@
+Stuff for lets fly 
+1.validate the pic of airlines (if no pic attached ask for pic)
+2.Add bulk email using loop to loop each email in user table.
+3.chart
+4.Booking funtionalilty
+5.upload user profile pic 
+9. how to hide fields 
+10. validate email with if for attachment and non attachment
+
+
+code to get user id
+string currentUserId = User.Identity.GetUserId()
+
+2.user.model.email to get all emails
+9.hide feilds use if statements or use hidden for

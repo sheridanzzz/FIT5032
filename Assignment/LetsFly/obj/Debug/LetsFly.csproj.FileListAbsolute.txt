@@ -91,7 +91,6 @@ C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\Microsoft.Owin.Security.Twitter.
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\sheri\source\repos\LetsFly\LetsFly\obj\Debug\LetsFly.csproj.CoreCompileInputs.cache
 C:\Users\sheri\source\repos\LetsFly\LetsFly\obj\Debug\LetsFly.csproj.CopyComplete
 C:\Users\sheri\source\repos\LetsFly\LetsFly\obj\Debug\LetsFly.dll
 C:\Users\sheri\source\repos\LetsFly\LetsFly\obj\Debug\LetsFly.pdb

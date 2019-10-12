@@ -29,6 +29,8 @@ namespace LetsFly.Models
         public int Capacity { get; set; }
         public string Duration { get; set; }
         public int AirlineId { get; set; }
+        public string ArrivalAirport { get; set; }
+        public string DepartureAirport { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }

@@ -17,20 +17,25 @@ namespace LetsFly.Models
     public partial class Airport
     {
         public int AirportId { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Please Enter Airport Name")]
         [Display(Name = "Airport Name")]
         public string AirportName { get; set; }
-        [Required]
-        [Display(Name = "Airport Code")]
+
+        [Required(ErrorMessage = "Please Enter Airport code")]
+        [Display(Name = "Airport code")]
         public string AirportCode { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Please Enter Airport Location")]
         [Display(Name = "Airport Location")]
         public string AirportLocationName { get; set; }
-        [Required]
-        [Display(Name = "Longitude")]
+
+        [Required(ErrorMessage = "Please Enter Airport Longitude")]
+        [Display(Name = "Airport Longitude ")]
         public string AirportLong { get; set; }
-        [Required]
-        [Display(Name = "Latitude ")]
+
+        [Required(ErrorMessage = "Please Enter Airport Latitude ")]
+        [Display(Name = "Airport Latitude ")]
         public string AirportLat { get; set; }
         public Nullable<int> FlightId { get; set; }
     

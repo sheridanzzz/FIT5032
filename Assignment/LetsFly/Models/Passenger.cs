@@ -18,8 +18,8 @@ namespace LetsFly.Models
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public bool Insurance { get; set; }
-        public bool ExtraLuggage { get; set; }
+        public Nullable<bool> Insurance { get; set; }
+        public Nullable<bool> ExtraLuggage { get; set; }
         public string TicketClass { get; set; }
         public string PassportNo { get; set; }
         public int BookingNumber { get; set; }
