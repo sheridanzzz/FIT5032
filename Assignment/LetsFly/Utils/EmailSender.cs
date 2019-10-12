@@ -27,17 +27,17 @@ namespace LetsFly.Utils
             var response = client.SendEmailAsync(msg);
         }
 
-        public void SendAttachment(String toEmail, String subject, String contents, String attachment)
+        public void SendAttachment(String toEmail, String subject, String contents, String attachment, String fileName)
         {
             var client = new SendGridClient(API_KEY);
-            var from = new EmailAddress("noreply@letsFly!.com", "Lets Fly!");
+            var from = new EmailAddress("noreply@LetsFly.com", "Lets Fly!");
             var to = new EmailAddress(toEmail, "");
             var plainTextContent = contents;
             var htmlContent = "<p>" + contents + "</p>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var bytes = File.ReadAllBytes(attachment);
             var file = Convert.ToBase64String(bytes);
-            msg.AddAttachment("attachment", file);
+            msg.AddAttachment(fileName, file);
             var response = client.SendEmailAsync(msg);
         }
     }

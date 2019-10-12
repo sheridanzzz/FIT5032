@@ -55,7 +55,7 @@ namespace LetsFly.Controllers
                 String attachment = model.Attachment;
 
                 EmailSender es = new EmailSender();
-                es.SendAttachment(toEmail, subject, contents, attachment);
+                es.SendAttachment(toEmail, subject, contents, attachment, fileName);
                 es.Send(toEmail, subject, contents);
 
 
