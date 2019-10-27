@@ -46,7 +46,7 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
     <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PhoneNo" Type="nvarchar(max)" Nullable="true" />
@@ -60,7 +60,7 @@
     </Key>
     <Property Name="RolesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleType" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="Bookings">
     <Key>
@@ -69,7 +69,7 @@
     <Property Name="BookingNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Price" Type="nvarchar(max)" Nullable="true" />
     <Property Name="State" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="FlightId" Type="int" Nullable="false" />
     <Property Name="BookingDate" Type="datetime" Nullable="true" />
   </EntityType>
@@ -115,7 +115,7 @@
     <Property Name="RatingDate" Type="datetime" Nullable="false" />
     <Property Name="RatingDescription" Type="nvarchar(max)" Nullable="true" />
     <Property Name="AirlineId" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="Flights">
     <Key>

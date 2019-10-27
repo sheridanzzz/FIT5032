@@ -42,6 +42,11 @@ namespace LetsFly.Controllers
         public ActionResult Create()
         {
             ViewBag.AirlineId = new SelectList(db.Airlines, "AirlineId", "AirlineName");
+
+            var airport = db.Airports.ToList();
+
+            ViewBag.MyList = airport;
+
             return View();
         }
 

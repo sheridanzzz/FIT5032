@@ -20,6 +20,7 @@ namespace LetsFly.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
+        //Admin email - Admin@letsfly.com password: Abc123!
         private LetsFlyModelContainer db = new LetsFlyModelContainer();
 
         [AllowAnonymous]
@@ -57,6 +58,7 @@ namespace LetsFly.Controllers
             {
                 if(fileUploader != null)
                 {
+                    //email for attachments 
                     string serverPath = Server.MapPath("~/Uploads/");
                     string fileName = Path.GetFileName(fileUploader.FileName);
                     string filePath = serverPath + fileName;
@@ -125,6 +127,7 @@ namespace LetsFly.Controllers
             {
                 foreach (var emailX in data)
                 {
+                    //bulk emails
                     string serverPath = Server.MapPath("~/Uploads/");
                     string fileName = Path.GetFileName(fileUploader.FileName);
                     string filePath = serverPath + fileName;
@@ -190,6 +193,7 @@ namespace LetsFly.Controllers
         [Authorize]
         public ActionResult PopularDestinations()
         {
+            //chart implementation some documentation from canvasjs
             List<PopChartModel.DataPoint> dataPoints = new List<PopChartModel.DataPoint>();
 
             dataPoints.Add(new PopChartModel.DataPoint(519960, "Eastern Australia", "#E7823A"));
@@ -220,7 +224,7 @@ namespace LetsFly.Controllers
 
             return View();
         }
-       
+
         
         [Authorize]
        // GET: Flights/Create
@@ -246,7 +250,7 @@ namespace LetsFly.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                //searching flights 
                 var origin = model.Origin;
                 var destination = model.Destination;
                 DateTime flightDate = model.FlightDate.Date;
@@ -304,6 +308,19 @@ namespace LetsFly.Controllers
             }
 
             Flight flight = db.Flights.Find(id);
+
+            string currentUserId = User.Identity.GetUserId();
+            var guid = new Guid(currentUserId);
+
+            var user = db.Users.Find(guid);
+
+            //checking if user has 5 bookings 
+            if (user.Bookings.Count >= 5)
+            {
+                ViewBag.Result = "Booking Limit Exceeded (cant have more than 5 bookings)";
+            }
+
+
             if (flight == null)
             {
                 return HttpNotFound();
@@ -318,25 +335,26 @@ namespace LetsFly.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Book(Flight flight)
         {
-           
-
-            //if (ModelState.IsValid)
-            //{
+            
                 Flight flightX = db.Flights.Find(flight.FlightId);
                 string currentUserId = User.Identity.GetUserId();
-                var user = db.Users.Find(currentUserId);
+                var guid = new Guid(currentUserId);
+
+                var user = db.Users.Find(guid);
 
                 
+
                 var capacity = flightX.Capacity;
                 List<Booking> confirmedBooking = db.Bookings.Where(r => r.State == "Confirmed").ToList();
 
+                //pending and confirmation emails and status of booking
                 if (confirmedBooking.Count() >= capacity)
                 {
                     var booking = new Booking();
 
                     booking.Price = flightX.Price;
                     booking.Flight = flightX;
-                    booking.UserId = currentUserId;
+                    booking.UserId = guid;
                     booking.BookingDate = DateTime.Now;
                     booking.State = "Pending";
                     booking.User = user;
@@ -354,11 +372,12 @@ namespace LetsFly.Controllers
                 }
                 else
                 {
+
                     var booking = new Booking();
 
                     booking.Price = flightX.Price;
                     booking.Flight = flightX;
-                    booking.UserId = currentUserId;
+                    booking.UserId = guid;
                     booking.BookingDate = DateTime.Now;
                     booking.State = "Confirmed";
                     booking.User = user;
@@ -366,12 +385,9 @@ namespace LetsFly.Controllers
                     var write = booking.Price + " " + booking.State + " " + flightX.FlightNumber;
 
                     String toEmail = user.Email;
-                    //String subject = "Booking confirmed!";
-                    //String contents = "Thank you for booking with lets Fly!";
-
                     EmailSender es = new EmailSender();
 
-                    //Pdf(write);
+                   
 
                     es.Send(toEmail, "Booking Confirmed!", "Booking is Confirmed");
                     es.SendBooking(flightX, toEmail);
@@ -379,40 +395,10 @@ namespace LetsFly.Controllers
                     db.SaveChanges();
                     ViewBag.Result = "Booking Confirmed.";
                 }
-            //}
 
-            return RedirectToAction("Index","Bookings");
+                return RedirectToAction("Index","Bookings");
         }
 
-        public void Pdf(string write)
-        {
-            IronPdf.HtmlToPdf Renderer = new IronPdf.HtmlToPdf();
-            // Render an HTML document or snippet as a string
-            Renderer.RenderHtmlAsPdf(write).SaveAs("C:\\Users\\sheri\\Desktop\\Invoice.pdf");
-            // Advanced: 
-            // Set a "base url" or file path so that images, javascript and CSS can be loaded  
-            var PDF = Renderer.RenderHtmlAsPdf("<img src='~\\Uploads\\letsFly!.PNG'>", @"C:\Users\sheri\source\repos\LetsFly\LetsFly\Uploads\");
-            // Create a PDF from an existing HTML using C#
-            var OutputPath = "C:\\Users\\sheri\\Desktop\\Assets.pdf";
-            PDF.SaveAs(OutputPath);
-
-            System.Diagnostics.Process.Start(OutputPath);
-        }
-
-        public string RenderRazorViewToString(string viewName, object model)
-        {
-            ViewData.Model = model;
-            using (var sw = new StringWriter())
-            {
-                var viewResult = ViewEngines.Engines.FindView(ControllerContext,
-                    viewName, "C:\\Users\\sheri\\source\\repos\\LetsFly\\LetsFly\\Views\\Shared\\_Layout.cshtml");
-                var viewContext = new ViewContext(ControllerContext, viewResult.View,
-                    ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
-            }
-        }
 
     }
 }

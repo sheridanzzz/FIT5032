@@ -5,7 +5,7 @@
 }
 
 <h2>Book</h2>
-@using (Html.BeginForm("Book", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Book", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
 
 {
     @Html.HiddenFor(m => m.FlightId)
@@ -16,71 +16,73 @@
     {
         <div class="alert alert-info">@ViewBag.Result</div>
     }
+    else
+    {
 
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FlightNumber)
+            </dt>
 
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.FlightNumber)
-    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FlightNumber)
+            </dd>
 
-    <dd>
-        @Html.DisplayFor(model => model.FlightNumber)
-    </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.Price)
-    </dt>
+            <dd>
+                $ @Html.DisplayFor(model => model.Price)
+            </dd>
 
-    <dd>
-        $ @Html.DisplayFor(model => model.Price)
-    </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Duration)
+            </dt>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.Duration)
-    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Duration) Mins
+            </dd>
 
-    <dd>
-        @Html.DisplayFor(model => model.Duration) Mins
-    </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DepartureDate)
+            </dt>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.DepartureDate)
-    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DepartureDate)
+            </dd>
 
-    <dd>
-        @Html.DisplayFor(model => model.DepartureDate)
-    </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ArrivalDate)
+            </dt>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.ArrivalDate)
-    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ArrivalDate)
+            </dd>
 
-    <dd>
-        @Html.DisplayFor(model => model.ArrivalDate)
-    </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DepartureAirport)
+            </dt>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.DepartureAirport)
-    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DepartureAirport)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ArrivalAirport)
+            </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.DepartureAirport)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.ArrivalAirport)
-    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ArrivalAirport)
+            </dd>
 
-    <dd>
-        @Html.DisplayFor(model => model.ArrivalAirport)
-    </dd>
+        </dl>
 
-</dl>
+        <div class="form-group">
 
-    <div class="form-group">
-       
-            <input type="submit" value="Confirm" class="btn btn-success" />
+            <input type="submit" value="Confirm" class="btn btn-success"/>
 
-            @Html.ActionLink("Cancel", "Index", "Home", new { }, new { @class = "btn btn-danger"})
-    </div>
-   
+            @Html.ActionLink("Cancel", "Index", "Home", new {}, new {@class = "btn btn-danger"})
+        </div>
+
+    }
 }

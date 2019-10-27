@@ -22,7 +22,7 @@ namespace LetsFly.Models
             this.Ratings = new HashSet<Rating>();
         }
     
-        public string UserId { get; set; }
+        public System.Guid UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNo { get; set; }

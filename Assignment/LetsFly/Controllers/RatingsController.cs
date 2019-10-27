@@ -25,6 +25,7 @@ namespace LetsFly.Controllers
 
             var count = db.Ratings.ToList();
 
+            //checks if user has ratings
             if (count.Count == 0)
             {
                 ViewBag.Result = "No Ratings Found!";
@@ -65,7 +66,8 @@ namespace LetsFly.Controllers
         {
             if (ModelState.IsValid)
             {
-                rating.UserId = User.Identity.GetUserId();
+                var guid = new Guid(User.Identity.GetUserId());
+                rating.UserId = guid;
                 rating.RatingDate = DateTime.Now;
                 db.Ratings.Add(rating);
                 db.SaveChanges();

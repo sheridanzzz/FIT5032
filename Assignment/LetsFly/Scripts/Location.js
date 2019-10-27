@@ -1,5 +1,6 @@
 ﻿const TOKEN = "pk.eyJ1Ijoic2hlcmlkYW56enoiLCJhIjoiY2swZ2M0bHc4MDJzczNuanN6MDZqcWFmcyJ9.w3hu3V0JnSDTa629aSdSig";
 var locations = [];
+//some code from tutorial 
 // The first step is obtain all the latitude and longitude from the HTML
 // The below is a simple jQuery selector
 $(".coordinates").each(function () {

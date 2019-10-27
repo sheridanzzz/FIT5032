@@ -23,7 +23,7 @@ namespace LetsFly.Models
         public int BookingNumber { get; set; }
         public string Price { get; set; }
         public string State { get; set; }
-        public string UserId { get; set; }
+        public System.Guid UserId { get; set; }
         public int FlightId { get; set; }
         public Nullable<System.DateTime> BookingDate { get; set; }
     

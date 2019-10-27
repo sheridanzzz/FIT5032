@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LetsFly.Models.Rating>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<LetsFly.Models.Rating>
 
 @{
     ViewBag.Title = "Index";
@@ -64,8 +65,11 @@
                         @Html.DisplayFor(modelItem => item.Airline.AirlineName)
                     </td>
                     <td>
+                        @if (item.UserId == new Guid(User.Identity.GetUserId()))
+                        {
                         @*@Html.ActionLink("Details", "Details", new {id = item.RatingId}) |*@
-                        @Html.ActionLink("Delete", "Delete", new {id = item.RatingId})
+                            @Html.ActionLink("Delete", "Delete", new {id = item.RatingId})
+                        }
                     </td>
                 </tr>
             }

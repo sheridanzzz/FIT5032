@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/23/2019 00:38:41
+-- Date Created: 10/27/2019 19:16:06
 -- Generated from EDMX file: C:\Users\sheri\source\repos\LetsFly\LetsFly\Models\LetsFlyModel.edmx
 -- --------------------------------------------------
 
@@ -23,9 +23,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_RatingAirline]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Ratings] DROP CONSTRAINT [FK_RatingAirline];
 GO
-IF OBJECT_ID(N'[dbo].[FK_FlightAirport]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Airports] DROP CONSTRAINT [FK_FlightAirport];
-GO
 IF OBJECT_ID(N'[dbo].[FK_AirlineFlight]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Flights] DROP CONSTRAINT [FK_AirlineFlight];
 GO
@@ -40,6 +37,9 @@ IF OBJECT_ID(N'[dbo].[FK_UserRating]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_FlightBooking]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_FlightBooking];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AirportFlight]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Flights] DROP CONSTRAINT [FK_AirportFlight];
 GO
 
 -- --------------------------------------------------
@@ -77,7 +77,7 @@ GO
 
 -- Creating table 'Users'
 CREATE TABLE [dbo].[Users] (
-    [UserId] nvarchar(max)  NOT NULL,
+    [UserId] uniqueidentifier  NOT NULL,
     [FirstName] nvarchar(max)  NULL,
     [LastName] nvarchar(max)  NULL,
     [PhoneNo] nvarchar(max)  NULL,
@@ -91,7 +91,7 @@ GO
 CREATE TABLE [dbo].[Roles] (
     [RolesId] int IDENTITY(1,1) NOT NULL,
     [RoleType] nvarchar(max)  NULL,
-    [UserId] nvarchar(max)  NOT NULL
+    [UserId] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -100,7 +100,7 @@ CREATE TABLE [dbo].[Bookings] (
     [BookingNumber] int IDENTITY(1,1) NOT NULL,
     [Price] nvarchar(max)  NULL,
     [State] nvarchar(max)  NULL,
-    [UserId] nvarchar(max)  NOT NULL,
+    [UserId] uniqueidentifier  NOT NULL,
     [FlightId] int  NOT NULL,
     [BookingDate] datetime  NULL
 );
@@ -146,7 +146,7 @@ CREATE TABLE [dbo].[Ratings] (
     [RatingDate] datetime  NOT NULL,
     [RatingDescription] nvarchar(max)  NULL,
     [AirlineId] int  NOT NULL,
-    [UserId] nvarchar(max)  NOT NULL
+    [UserId] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -271,7 +271,7 @@ GO
 ALTER TABLE [dbo].[Bookings]
 ADD CONSTRAINT [FK_UserBooking]
     FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users] 
+    REFERENCES [dbo].[Users]
         ([UserId])
     ON DELETE CASCADE ON UPDATE NO ACTION;
 GO

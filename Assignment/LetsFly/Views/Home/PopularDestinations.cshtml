@@ -93,7 +93,8 @@ function visitorsChartDrilldownHandler(e) {
 	chart = new CanvasJS.Chart("chartContainer", visitorsDrilldownedChartOptions);
 	chart.options.data = visitorsData[e.dataPoint.name];
 	chart.options.title = { text: e.dataPoint.name }
-	chart.render();
+    chart.render();
+
 	$("#backButton").toggleClass("invisible");
 }
  
@@ -126,9 +127,8 @@ $("#backButton").click(function () {
 </style>
 </head>
 <body>
- 
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<button class="btn invisible" id="backButton">&lt; Back</button>
+    <button class="btn invisible" id="backButton">&lt; Back</button>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>

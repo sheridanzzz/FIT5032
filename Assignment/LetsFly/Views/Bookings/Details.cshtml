@@ -1,4 +1,5 @@
-﻿@model LetsFly.Models.Booking
+﻿@using LetsFly.Models
+@model LetsFly.Models.Booking
 
 @{
     ViewBag.Title = "Details";
@@ -89,6 +90,10 @@
 
         <dd>
             @Html.DisplayFor(model => model.Flight.ArrivalAirport)
+        </dd>
+        <br /> 
+        <dd>
+            @Html.ActionLink("Download Invoice","PrintInvoice",new {bookid = Model.BookingNumber})
         </dd>
     </dl>
 </div>

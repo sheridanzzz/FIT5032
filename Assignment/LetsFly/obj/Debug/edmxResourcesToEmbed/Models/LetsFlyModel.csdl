@@ -46,7 +46,7 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="UserId" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
     <Property Name="FirstName" Type="String" Nullable="true" />
     <Property Name="LastName" Type="String" Nullable="true" />
     <Property Name="PhoneNo" Type="String" Nullable="true" />
@@ -64,7 +64,7 @@
     <Property Name="RolesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RoleType" Type="String" Nullable="true" />
     <NavigationProperty Name="User" Relationship="LetsFlyModel.UserRoles" FromRole="Roles" ToRole="User" />
-    <Property Name="UserId" Type="String" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
   </EntityType>
   <EntityType Name="Booking">
     <Key>
@@ -75,7 +75,7 @@
     <Property Name="State" Type="String" Nullable="true" />
     <NavigationProperty Name="Passengers" Relationship="LetsFlyModel.BookingPassenger" FromRole="Booking" ToRole="Passenger" />
     <NavigationProperty Name="User" Relationship="LetsFlyModel.UserBooking" FromRole="Booking" ToRole="User" />
-    <Property Name="UserId" Type="String" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
     <NavigationProperty Name="Flight" Relationship="LetsFlyModel.FlightBooking" FromRole="Booking" ToRole="Flight" />
     <Property Name="FlightId" Type="Int32" Nullable="false" />
     <Property Name="BookingDate" Type="DateTime" Nullable="true" />
@@ -128,7 +128,7 @@
     <NavigationProperty Name="Airline" Relationship="LetsFlyModel.RatingAirline" FromRole="Rating" ToRole="Airline" />
     <Property Name="AirlineId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="User" Relationship="LetsFlyModel.UserRating" FromRole="Rating" ToRole="User" />
-    <Property Name="UserId" Type="String" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
   </EntityType>
   <EntityType Name="Flight">
     <Key>

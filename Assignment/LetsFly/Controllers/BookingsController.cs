@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using LetsFly.Models;
 using Microsoft.AspNet.Identity;
 using LetsFly.Utils;
+using Rotativa;
 
 
 namespace LetsFly.Controllers
@@ -21,17 +22,20 @@ namespace LetsFly.Controllers
         // GET: Bookings
         public ActionResult Index()
         {
+            //get bookings for the current user
             string currentUserId = User.Identity.GetUserId();
             var bookings = db.Bookings.Include(b => b.User);
 
-            var count = db.Bookings.Where(m => m.UserId == currentUserId).ToList();
+            var guid = new Guid(currentUserId);
+
+            var count = db.Bookings.Where(m => m.UserId == guid).ToList();
 
             if (count.Count == 0)
             {
                 ViewBag.Result = "No Bookings Found!";
             }
 
-            return View(db.Bookings.Where(m => m.UserId == currentUserId).ToList());
+            return View(db.Bookings.Where(m => m.UserId == guid).ToList());
         }
 
         public ActionResult view()
@@ -41,6 +45,7 @@ namespace LetsFly.Controllers
             return View(db.Bookings.ToList());
         }
 
+        [AllowAnonymous]
         // GET: Bookings/Details/5
         public ActionResult Details(int? id)
         {
@@ -54,6 +59,15 @@ namespace LetsFly.Controllers
                 return HttpNotFound();
             }
             return View(booking);
+        }
+
+        //Generating PDF
+        public ActionResult PrintInvoice(int? bookid)
+        {
+            return new ActionAsPdf(
+                    "Details",
+                    new { id = bookid })
+                { FileName = "Invoice.pdf" };
         }
 
         // GET: Bookings/Create
@@ -155,7 +169,7 @@ namespace LetsFly.Controllers
                 
                 if (pendingBooking.Any())
                 {
-
+                    //changes from pending to confirmed
                     pendingBooking[0].State = "Confirmed";
 
                     EmailSender es = new EmailSender();

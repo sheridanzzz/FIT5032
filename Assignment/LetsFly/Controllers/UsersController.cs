@@ -48,7 +48,9 @@ namespace LetsFly.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user = db.Users.Find(id);
+            var guid = new Guid(id);
+            User user = db.Users.Find(guid);
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -91,7 +93,8 @@ namespace LetsFly.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user = db.Users.Find(id);
+            var guid = new Guid(id);
+            User user = db.Users.Find(guid);
             if (user == null)
             {
                 return HttpNotFound();
@@ -128,7 +131,8 @@ namespace LetsFly.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user = db.Users.Find(id);
+            var guid = new Guid(id);
+            User user = db.Users.Find(guid);
 
 
             if (user == null)
@@ -157,7 +161,8 @@ namespace LetsFly.Controllers
                 var result = await UserManager.DeleteAsync(user1);
                 if (result.Succeeded)
                 {
-                    User user = db.Users.Find(id);
+                    var guid = new Guid(id);
+                    User user = db.Users.Find(guid);
                     db.Users.Remove(user);
                     db.SaveChanges();
                 }

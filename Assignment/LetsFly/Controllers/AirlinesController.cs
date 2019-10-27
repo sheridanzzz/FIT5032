@@ -42,6 +42,7 @@ namespace LetsFly.Controllers
             var ratings = airline.Ratings;
             if (ratings.Count > 0)
             {
+                //pass data to view
                 var ratingSum = ratings.Sum(d=>d.RatingNumber);
                 ViewBag.RatingSum = ratingSum;
                 var ratingCount = ratings.Count();

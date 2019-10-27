@@ -113,4 +113,5 @@ C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\AntiXssLibrary.xml
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\HtmlSanitizationLibrary.xml
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\IronPdf.dll
 C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\IronPdf.xml
+C:\Users\sheri\source\repos\LetsFly\LetsFly\bin\Rotativa.dll
 C:\Users\sheri\source\repos\LetsFly\LetsFly\obj\Debug\LetsFly.csprojAssemblyReference.cache

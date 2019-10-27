@@ -16,7 +16,7 @@ namespace LetsFly.Models
     {
         public int RolesId { get; set; }
         public string RoleType { get; set; }
-        public string UserId { get; set; }
+        public System.Guid UserId { get; set; }
     
         public virtual User User { get; set; }
     }

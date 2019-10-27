@@ -159,6 +159,7 @@ namespace LetsFly.Controllers
 
                 if (result.Succeeded)
                 {
+                    //send email
                     String toEmail = model.Email;
                     String subject = "Thank you for registering";
                     String contents = "Welcome to Lets Fly!";
@@ -167,10 +168,12 @@ namespace LetsFly.Controllers
                     es.Send(toEmail, subject, contents);
                     ViewBag.Result = "Email has been send.";
 
+                    var guid = new Guid(user.Id);
+
                     string currentUserId = User.Identity.GetUserId();
                     //adding data to the user table
                     var lfUser = new User();
-                    lfUser.UserId = user.Id;
+                    lfUser.UserId = guid;
                     lfUser.Email = model.Email;
                     lfUser.FirstName = model.FirstName;
                     lfUser.LastName = model.LastName;

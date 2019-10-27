@@ -20,7 +20,7 @@ namespace LetsFly.Models
         public System.DateTime RatingDate { get; set; }
         public string RatingDescription { get; set; }
         public int AirlineId { get; set; }
-        public string UserId { get; set; }
+        public System.Guid UserId { get; set; }
     
         public virtual Airline Airline { get; set; }
         public virtual User User { get; set; }

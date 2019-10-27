@@ -13,6 +13,7 @@ namespace LetsFly.Models
     }
     public class FlightModel
     {
+        public List<Airport> Airport { get; set; }
         public int FlightId { get; set; }
 
         [Required(ErrorMessage = "Please Enter Flight Number")]
@@ -21,10 +22,12 @@ namespace LetsFly.Models
 
         [Required(ErrorMessage = "Please Enter Departure Date")]
         [Display(Name = "Departure Date")]
+        [DataType(DataType.DateTime)]
         public System.DateTime DepartureDate { get; set; }
 
         [Required(ErrorMessage = "Please Enter Arrival Date")]
         [Display(Name = "Arrival Date")]
+        [DataType(DataType.DateTime)]
         public System.DateTime ArrivalDate { get; set; }
 
         [Required(ErrorMessage = "Please Enter Price")]
@@ -44,11 +47,11 @@ namespace LetsFly.Models
 
         public int AirlineId { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Arrival Airport")]
+        [Required(ErrorMessage = "Please Select Arrival Airport")]
         [Display(Name = "Arrival Airport")]
         public string ArrivalAirport { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Departure Airport")]
+        [Required(ErrorMessage = "Please Select Departure Airport")]
         [Display(Name = "Departure Airport")]
         public string DepartureAirport { get; set; }
         public int AirportId { get; set; }

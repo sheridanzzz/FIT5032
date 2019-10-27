@@ -11,10 +11,12 @@ namespace LetsFly.Models
         
         public List<Airport> Airport { get; set; }
 
-        
+        [Required(ErrorMessage = "Please Select Origin")]
+        [Display(Name = "Origin")]
         public string Origin { get; set; }
 
-        
+        [Required(ErrorMessage = "Please Select Destination")]
+        [Display(Name = "Destination")]
         public string Destination { get; set; }
 
         [Required(ErrorMessage = "Please Select Date")]

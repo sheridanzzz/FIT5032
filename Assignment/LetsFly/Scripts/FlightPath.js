@@ -1,4 +1,5 @@
 ﻿$(".coordinates").each(function () {
+    //some code from tutorials and mapbox documentation 
     //var longitude = $(".longitude", this).text().trim();
     //var latitude = $(".latitude", this).text().trim();
     var description = $(".description", this).text().trim();
