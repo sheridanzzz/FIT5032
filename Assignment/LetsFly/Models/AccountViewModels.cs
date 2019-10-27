@@ -102,7 +102,6 @@ namespace LetsFly.Models
         public string LastName { get; set; }
 
         //users phone number
-        //add validation later
         [Phone]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

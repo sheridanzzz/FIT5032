@@ -7,9 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-
 namespace LetsFly.Models
 {
     using System;
@@ -18,21 +15,10 @@ namespace LetsFly.Models
     public partial class Rating
     {
         public int RatingId { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Rating number")]
-        [Range(0, 5)]
-        [Display(Name = "Rating number")]
         public int RatingNumber { get; set; }
         public string RatingImg { get; set; }
         public System.DateTime RatingDate { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Description")]
-        [Display(Name = "Description")]
-        [AllowHtml]
         public string RatingDescription { get; set; }
-
-        [Required(ErrorMessage = "Please select Airline")]
-        [Display(Name = "Airline")]
         public int AirlineId { get; set; }
         public string UserId { get; set; }
     

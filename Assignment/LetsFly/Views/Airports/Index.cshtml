@@ -58,9 +58,6 @@
         <th>
             @Html.DisplayNameFor(model => model.AirportLat)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Flight.FlightNumber)
-        </th>
         <th></th>
     </tr>
 
@@ -84,9 +81,6 @@
 
             <td class="latitude">
                 @Html.DisplayFor(modelItem => item.AirportLat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Flight.FlightNumber)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.AirportId }) |

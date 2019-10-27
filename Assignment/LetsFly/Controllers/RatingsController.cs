@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace LetsFly.Controllers
 {
+    [Authorize]
     public class RatingsController : Controller
     {
         private LetsFlyModelContainer db = new LetsFlyModelContainer();
@@ -21,6 +22,13 @@ namespace LetsFly.Controllers
         public ActionResult Index()
         {
             var ratings = db.Ratings.Include(r => r.User).Include(r => r.Airline);
+
+            var count = db.Ratings.ToList();
+
+            if (count.Count == 0)
+            {
+                ViewBag.Result = "No Ratings Found!";
+            }
             return View(ratings.ToList());
         }
 
@@ -36,6 +44,7 @@ namespace LetsFly.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(rating);
         }
 
@@ -136,24 +145,6 @@ namespace LetsFly.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        public ActionResult SendEmails(User model)
-        {
-            //redo
-            var data = model.Email.ToList();
-
-            foreach (var emailX in data)
-            {
-                var toEmail = emailX.ToString();
-                String subject = "Thank you for registering";
-                String contents = "Welcome to Lets Fly!";
-
-                EmailSender es = new EmailSender();
-                es.Send(toEmail, subject, contents);
-            }
-
-            return RedirectToAction("Index");
         }
     }
 }

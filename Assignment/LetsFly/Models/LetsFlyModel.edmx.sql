@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/08/2019 22:16:20
+-- Date Created: 10/23/2019 00:38:41
 -- Generated from EDMX file: C:\Users\sheri\source\repos\LetsFly\LetsFly\Models\LetsFlyModel.edmx
 -- --------------------------------------------------
 
@@ -17,23 +17,8 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_UserRoles]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Roles] DROP CONSTRAINT [FK_UserRoles];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserBooking]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_UserBooking];
-GO
 IF OBJECT_ID(N'[dbo].[FK_BookingPassenger]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Passengers] DROP CONSTRAINT [FK_BookingPassenger];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserRating]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Ratings] DROP CONSTRAINT [FK_UserRating];
-GO
-IF OBJECT_ID(N'[dbo].[FK_BookingFlight_Booking]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BookingFlight] DROP CONSTRAINT [FK_BookingFlight_Booking];
-GO
-IF OBJECT_ID(N'[dbo].[FK_BookingFlight_Flight]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BookingFlight] DROP CONSTRAINT [FK_BookingFlight_Flight];
 GO
 IF OBJECT_ID(N'[dbo].[FK_RatingAirline]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Ratings] DROP CONSTRAINT [FK_RatingAirline];
@@ -43,6 +28,18 @@ IF OBJECT_ID(N'[dbo].[FK_FlightAirport]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_AirlineFlight]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Flights] DROP CONSTRAINT [FK_AirlineFlight];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserBooking]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_UserBooking];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserRoles]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Roles] DROP CONSTRAINT [FK_UserRoles];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserRating]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Ratings] DROP CONSTRAINT [FK_UserRating];
+GO
+IF OBJECT_ID(N'[dbo].[FK_FlightBooking]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Bookings] DROP CONSTRAINT [FK_FlightBooking];
 GO
 
 -- --------------------------------------------------
@@ -73,9 +70,6 @@ GO
 IF OBJECT_ID(N'[dbo].[Flights]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Flights];
 GO
-IF OBJECT_ID(N'[dbo].[BookingFlight]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BookingFlight];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -84,8 +78,8 @@ GO
 -- Creating table 'Users'
 CREATE TABLE [dbo].[Users] (
     [UserId] nvarchar(max)  NOT NULL,
-    [FirstName] nvarchar(max)  NOT NULL,
-    [LastName] nvarchar(max)  NOT NULL,
+    [FirstName] nvarchar(max)  NULL,
+    [LastName] nvarchar(max)  NULL,
     [PhoneNo] nvarchar(max)  NULL,
     [UserImg] nvarchar(max)  NULL,
     [Email] nvarchar(max)  NOT NULL,
@@ -106,9 +100,9 @@ CREATE TABLE [dbo].[Bookings] (
     [BookingNumber] int IDENTITY(1,1) NOT NULL,
     [Price] nvarchar(max)  NULL,
     [State] nvarchar(max)  NULL,
-    [PaymentMade] bit  NULL,
-    [BillingAddress] nvarchar(max)  NULL,
-    [UserId] nvarchar(max)  NOT NULL
+    [UserId] nvarchar(max)  NOT NULL,
+    [FlightId] int  NOT NULL,
+    [BookingDate] datetime  NULL
 );
 GO
 
@@ -118,9 +112,6 @@ CREATE TABLE [dbo].[Passengers] (
     [Email] nvarchar(max)  NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [Insurance] bit  NULL,
-    [ExtraLuggage] bit  NULL,
-    [TicketClass] nvarchar(max)  NULL,
     [PassportNo] nvarchar(max)  NOT NULL,
     [BookingNumber] int  NOT NULL
 );
@@ -133,8 +124,7 @@ CREATE TABLE [dbo].[Airports] (
     [AirportCode] nvarchar(max)  NOT NULL,
     [AirportLocationName] nvarchar(max)  NOT NULL,
     [AirportLong] nvarchar(max)  NOT NULL,
-    [AirportLat] nvarchar(max)  NOT NULL,
-    [FlightId] int  NULL
+    [AirportLat] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -166,19 +156,13 @@ CREATE TABLE [dbo].[Flights] (
     [FlightNumber] nvarchar(max)  NOT NULL,
     [DepartureDate] datetime  NOT NULL,
     [ArrivalDate] datetime  NOT NULL,
-    [NomimalPrice] nvarchar(max)  NOT NULL,
+    [Price] nvarchar(max)  NOT NULL,
     [Capacity] int  NOT NULL,
     [Duration] nvarchar(max)  NOT NULL,
     [AirlineId] int  NOT NULL,
     [ArrivalAirport] nvarchar(max)  NULL,
-    [DepartureAirport] nvarchar(max)  NULL
-);
-GO
-
--- Creating table 'BookingFlight'
-CREATE TABLE [dbo].[BookingFlight] (
-    [Bookings_BookingNumber] int  NOT NULL,
-    [Flights_FlightId] int  NOT NULL
+    [DepartureAirport] nvarchar(max)  NULL,
+    [AirportId] int  NOT NULL
 );
 GO
 
@@ -234,12 +218,6 @@ ADD CONSTRAINT [PK_Flights]
     PRIMARY KEY CLUSTERED ([FlightId] ASC);
 GO
 
--- Creating primary key on [Bookings_BookingNumber], [Flights_FlightId] in table 'BookingFlight'
-ALTER TABLE [dbo].[BookingFlight]
-ADD CONSTRAINT [PK_BookingFlight]
-    PRIMARY KEY CLUSTERED ([Bookings_BookingNumber], [Flights_FlightId] ASC);
-GO
-
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -250,7 +228,7 @@ ADD CONSTRAINT [FK_BookingPassenger]
     FOREIGN KEY ([BookingNumber])
     REFERENCES [dbo].[Bookings]
         ([BookingNumber])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_BookingPassenger'
@@ -259,37 +237,13 @@ ON [dbo].[Passengers]
     ([BookingNumber]);
 GO
 
--- Creating foreign key on [Bookings_BookingNumber] in table 'BookingFlight'
-ALTER TABLE [dbo].[BookingFlight]
-ADD CONSTRAINT [FK_BookingFlight_Booking]
-    FOREIGN KEY ([Bookings_BookingNumber])
-    REFERENCES [dbo].[Bookings]
-        ([BookingNumber])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating foreign key on [Flights_FlightId] in table 'BookingFlight'
-ALTER TABLE [dbo].[BookingFlight]
-ADD CONSTRAINT [FK_BookingFlight_Flight]
-    FOREIGN KEY ([Flights_FlightId])
-    REFERENCES [dbo].[Flights]
-        ([FlightId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_BookingFlight_Flight'
-CREATE INDEX [IX_FK_BookingFlight_Flight]
-ON [dbo].[BookingFlight]
-    ([Flights_FlightId]);
-GO
-
 -- Creating foreign key on [AirlineId] in table 'Ratings'
 ALTER TABLE [dbo].[Ratings]
 ADD CONSTRAINT [FK_RatingAirline]
     FOREIGN KEY ([AirlineId])
     REFERENCES [dbo].[Airlines]
         ([AirlineId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_RatingAirline'
@@ -298,28 +252,13 @@ ON [dbo].[Ratings]
     ([AirlineId]);
 GO
 
--- Creating foreign key on [FlightId] in table 'Airports'
-ALTER TABLE [dbo].[Airports]
-ADD CONSTRAINT [FK_FlightAirport]
-    FOREIGN KEY ([FlightId])
-    REFERENCES [dbo].[Flights]
-        ([FlightId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_FlightAirport'
-CREATE INDEX [IX_FK_FlightAirport]
-ON [dbo].[Airports]
-    ([FlightId]);
-GO
-
 -- Creating foreign key on [AirlineId] in table 'Flights'
 ALTER TABLE [dbo].[Flights]
 ADD CONSTRAINT [FK_AirlineFlight]
     FOREIGN KEY ([AirlineId])
     REFERENCES [dbo].[Airlines]
         ([AirlineId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AirlineFlight'
@@ -332,9 +271,9 @@ GO
 ALTER TABLE [dbo].[Bookings]
 ADD CONSTRAINT [FK_UserBooking]
     FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[Users] 
         ([UserId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserBooking'
@@ -349,7 +288,7 @@ ADD CONSTRAINT [FK_UserRoles]
     FOREIGN KEY ([UserId])
     REFERENCES [dbo].[Users]
         ([UserId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserRoles'
@@ -364,13 +303,43 @@ ADD CONSTRAINT [FK_UserRating]
     FOREIGN KEY ([UserId])
     REFERENCES [dbo].[Users]
         ([UserId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserRating'
 CREATE INDEX [IX_FK_UserRating]
 ON [dbo].[Ratings]
     ([UserId]);
+GO
+
+-- Creating foreign key on [FlightId] in table 'Bookings'
+ALTER TABLE [dbo].[Bookings]
+ADD CONSTRAINT [FK_FlightBooking]
+    FOREIGN KEY ([FlightId])
+    REFERENCES [dbo].[Flights]
+        ([FlightId])
+    ON DELETE CASCADE ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FlightBooking'
+CREATE INDEX [IX_FK_FlightBooking]
+ON [dbo].[Bookings]
+    ([FlightId]);
+GO
+
+-- Creating foreign key on [AirportId] in table 'Flights'
+ALTER TABLE [dbo].[Flights]
+ADD CONSTRAINT [FK_AirportFlight]
+    FOREIGN KEY ([AirportId])
+    REFERENCES [dbo].[Airports]
+        ([AirportId])
+    ON DELETE CASCADE ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AirportFlight'
+CREATE INDEX [IX_FK_AirportFlight]
+ON [dbo].[Flights]
+    ([AirportId]);
 GO
 
 -- --------------------------------------------------

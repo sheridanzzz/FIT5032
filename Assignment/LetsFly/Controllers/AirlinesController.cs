@@ -11,7 +11,8 @@ using LetsFly.Models;
 
 namespace LetsFly.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
+    [Authorize]
     public class AirlinesController : Controller
     {
         
@@ -20,6 +21,7 @@ namespace LetsFly.Controllers
         // GET: Airlines
         public ActionResult Index()
         {
+
             return View(db.Airlines.ToList());
         }
 
@@ -31,10 +33,26 @@ namespace LetsFly.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Airline airline = db.Airlines.Find(id);
+
             if (airline == null)
             {
                 return HttpNotFound();
             }
+
+            var ratings = airline.Ratings;
+            if (ratings.Count > 0)
+            {
+                var ratingSum = ratings.Sum(d=>d.RatingNumber);
+                ViewBag.RatingSum = ratingSum;
+                var ratingCount = ratings.Count();
+                ViewBag.RatingCount = ratingCount;
+            }
+            else
+            {
+                ViewBag.RatingSum = 0;
+                ViewBag.RatingCount = 0;
+            }
+
             return View(airline);
         }
 
@@ -58,14 +76,17 @@ namespace LetsFly.Controllers
             TryValidateModel(airline);
             if (ModelState.IsValid)
             {
-                string serverPath = Server.MapPath("~/Uploads/");
-                string fileExtension = Path.GetExtension(postedFile.FileName);
-                string filePath = airline.AirlineImg + fileExtension;
-                airline.AirlineImg = filePath;
-                postedFile.SaveAs(serverPath + airline.AirlineImg);
-                db.Airlines.Add(airline);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (postedFile != null)
+                {
+                    string serverPath = Server.MapPath("~/Uploads/");
+                    string fileExtension = Path.GetExtension(postedFile.FileName);
+                    string filePath = airline.AirlineImg + fileExtension;
+                    airline.AirlineImg = filePath;
+                    postedFile.SaveAs(serverPath + airline.AirlineImg);
+                    db.Airlines.Add(airline);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
             }
 

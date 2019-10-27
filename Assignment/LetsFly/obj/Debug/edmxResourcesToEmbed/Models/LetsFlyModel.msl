@@ -29,9 +29,9 @@
           <ScalarProperty Name="BookingNumber" ColumnName="BookingNumber" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="PaymentMade" ColumnName="PaymentMade" />
-          <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FlightId" ColumnName="FlightId" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -42,9 +42,6 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Insurance" ColumnName="Insurance" />
-          <ScalarProperty Name="ExtraLuggage" ColumnName="ExtraLuggage" />
-          <ScalarProperty Name="TicketClass" ColumnName="TicketClass" />
           <ScalarProperty Name="PassportNo" ColumnName="PassportNo" />
           <ScalarProperty Name="BookingNumber" ColumnName="BookingNumber" />
         </MappingFragment>
@@ -59,7 +56,6 @@
           <ScalarProperty Name="AirportLocationName" ColumnName="AirportLocationName" />
           <ScalarProperty Name="AirportLong" ColumnName="AirportLong" />
           <ScalarProperty Name="AirportLat" ColumnName="AirportLat" />
-          <ScalarProperty Name="FlightId" ColumnName="FlightId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -94,22 +90,15 @@
           <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
           <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
           <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
-          <ScalarProperty Name="NomimalPrice" ColumnName="NomimalPrice" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Capacity" ColumnName="Capacity" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="AirlineId" ColumnName="AirlineId" />
           <ScalarProperty Name="ArrivalAirport" ColumnName="ArrivalAirport" />
           <ScalarProperty Name="DepartureAirport" ColumnName="DepartureAirport" />
+          <ScalarProperty Name="AirportId" ColumnName="AirportId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="BookingFlight" TypeName="LetsFlyModel.BookingFlight" StoreEntitySet="BookingFlight">
-      <EndProperty Name="Booking">
-        <ScalarProperty Name="BookingNumber" ColumnName="Bookings_BookingNumber" />
-      </EndProperty>
-      <EndProperty Name="Flight">
-        <ScalarProperty Name="FlightId" ColumnName="Flights_FlightId" />
-      </EndProperty>
-    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -1,7 +1,10 @@
 ﻿$(".coordinates").each(function () {
-    var longitude = $(".longitude", this).text().trim();
-    var latitude = $(".latitude", this).text().trim();
+    //var longitude = $(".longitude", this).text().trim();
+    //var latitude = $(".latitude", this).text().trim();
     var description = $(".description", this).text().trim();
+
+    var longitude = document.getElementById("longitude").value;
+    var latitude = document.getElementById("latitude").value;
     // Create a point data structure to hold the values.
     var point = {
         "latitude": latitude,
@@ -21,9 +24,12 @@ var map = new mapboxgl.Map({
 });
 
 
-var origin = [locations[0].longitude, locations[0].latitude];
+//var origin = [locations[0].longitude, locations[0].latitude];
 
-var destination = [locations[1].longitude, locations[1].latitude];
+//var destination = [locations[1].longitude, locations[1].latitude];
+
+var origin = [document.getElementById("longitude").value, document.getElementById("latitude").value];
+var destination = [document.getElementById("longitude1").value, document.getElementById("latitude1").value];
 
 // A simple line from origin to destination.
 var route = {

@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace LetsFly.Models
 {
     using System;
@@ -16,29 +14,20 @@ namespace LetsFly.Models
     
     public partial class Airport
     {
-        public int AirportId { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Airport Name")]
-        [Display(Name = "Airport Name")]
-        public string AirportName { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Airport code")]
-        [Display(Name = "Airport code")]
-        public string AirportCode { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Airport Location")]
-        [Display(Name = "Airport Location")]
-        public string AirportLocationName { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Airport Longitude")]
-        [Display(Name = "Airport Longitude ")]
-        public string AirportLong { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Airport Latitude ")]
-        [Display(Name = "Airport Latitude ")]
-        public string AirportLat { get; set; }
-        public Nullable<int> FlightId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Airport()
+        {
+            this.Flights = new HashSet<Flight>();
+        }
     
-        public virtual Flight Flight { get; set; }
+        public int AirportId { get; set; }
+        public string AirportName { get; set; }
+        public string AirportCode { get; set; }
+        public string AirportLocationName { get; set; }
+        public string AirportLong { get; set; }
+        public string AirportLat { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Flight> Flights { get; set; }
     }
 }

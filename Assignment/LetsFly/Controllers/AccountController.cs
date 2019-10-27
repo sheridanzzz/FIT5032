@@ -157,8 +157,6 @@ namespace LetsFly.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-               
-
                 if (result.Succeeded)
                 {
                     String toEmail = model.Email;
@@ -396,11 +394,20 @@ namespace LetsFly.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
+                        String toEmail = model.Email;
+                        String subject = "Thank you for registering";
+                        String contents = "Welcome to Lets Fly!";
+
+                        EmailSender es = new EmailSender();
+                        es.Send(toEmail, subject, contents);
+                        ViewBag.Result = "Email has been send.";
+
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }

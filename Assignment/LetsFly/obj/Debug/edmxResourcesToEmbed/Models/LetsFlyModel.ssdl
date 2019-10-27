@@ -9,26 +9,13 @@
     <EntitySet Name="Airlines" EntityType="LetsFlyModel.Store.Airlines" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Ratings" EntityType="LetsFlyModel.Store.Ratings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Flights" EntityType="LetsFlyModel.Store.Flights" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="BookingFlight" EntityType="LetsFlyModel.Store.BookingFlight" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="BookingPassenger" Association="LetsFlyModel.Store.BookingPassenger">
       <End Role="Booking" EntitySet="Bookings" />
       <End Role="Passenger" EntitySet="Passengers" />
     </AssociationSet>
-    <AssociationSet Name="FK_BookingFlight_Booking" Association="LetsFlyModel.Store.FK_BookingFlight_Booking">
-      <End Role="Booking" EntitySet="Bookings" />
-      <End Role="BookingFlight" EntitySet="BookingFlight" />
-    </AssociationSet>
-    <AssociationSet Name="FK_BookingFlight_Flight" Association="LetsFlyModel.Store.FK_BookingFlight_Flight">
-      <End Role="Flight" EntitySet="Flights" />
-      <End Role="BookingFlight" EntitySet="BookingFlight" />
-    </AssociationSet>
     <AssociationSet Name="RatingAirline" Association="LetsFlyModel.Store.RatingAirline">
       <End Role="Rating" EntitySet="Ratings" />
       <End Role="Airline" EntitySet="Airlines" />
-    </AssociationSet>
-    <AssociationSet Name="FlightAirport" Association="LetsFlyModel.Store.FlightAirport">
-      <End Role="Flight" EntitySet="Flights" />
-      <End Role="Airport" EntitySet="Airports" />
     </AssociationSet>
     <AssociationSet Name="AirlineFlight" Association="LetsFlyModel.Store.AirlineFlight">
       <End Role="Airline" EntitySet="Airlines" />
@@ -46,14 +33,22 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Rating" EntitySet="Ratings" />
     </AssociationSet>
+    <AssociationSet Name="FlightBooking" Association="LetsFlyModel.Store.FlightBooking">
+      <End Role="Flight" EntitySet="Flights" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="AirportFlight" Association="LetsFlyModel.Store.AirportFlight">
+      <End Role="Airport" EntitySet="Airports" />
+      <End Role="Flight" EntitySet="Flights" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
     <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PhoneNo" Type="nvarchar(max)" Nullable="true" />
     <Property Name="UserImg" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
@@ -74,9 +69,9 @@
     <Property Name="BookingNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Price" Type="nvarchar(max)" Nullable="true" />
     <Property Name="State" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PaymentMade" Type="bit" Nullable="true" />
-    <Property Name="BillingAddress" Type="nvarchar(max)" Nullable="true" />
     <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FlightId" Type="int" Nullable="false" />
+    <Property Name="BookingDate" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="Passengers">
     <Key>
@@ -86,9 +81,6 @@
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Insurance" Type="bit" Nullable="true" />
-    <Property Name="ExtraLuggage" Type="bit" Nullable="true" />
-    <Property Name="TicketClass" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PassportNo" Type="nvarchar(max)" Nullable="false" />
     <Property Name="BookingNumber" Type="int" Nullable="false" />
   </EntityType>
@@ -102,7 +94,6 @@
     <Property Name="AirportLocationName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AirportLong" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AirportLat" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="FlightId" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Airlines">
     <Key>
@@ -134,20 +125,13 @@
     <Property Name="FlightNumber" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DepartureDate" Type="datetime" Nullable="false" />
     <Property Name="ArrivalDate" Type="datetime" Nullable="false" />
-    <Property Name="NomimalPrice" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Capacity" Type="int" Nullable="false" />
     <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AirlineId" Type="int" Nullable="false" />
     <Property Name="ArrivalAirport" Type="nvarchar(max)" Nullable="true" />
     <Property Name="DepartureAirport" Type="nvarchar(max)" Nullable="true" />
-  </EntityType>
-  <EntityType Name="BookingFlight">
-    <Key>
-      <PropertyRef Name="Bookings_BookingNumber" />
-      <PropertyRef Name="Flights_FlightId" />
-    </Key>
-    <Property Name="Bookings_BookingNumber" Type="int" Nullable="false" />
-    <Property Name="Flights_FlightId" Type="int" Nullable="false" />
+    <Property Name="AirportId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="BookingPassenger">
     <End Role="Booking" Type="LetsFlyModel.Store.Bookings" Multiplicity="1" />
@@ -170,18 +154,6 @@
       </Principal>
       <Dependent Role="Rating">
         <PropertyRef Name="AirlineId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FlightAirport">
-    <End Role="Flight" Type="LetsFlyModel.Store.Flights" Multiplicity="0..1" />
-    <End Role="Airport" Type="LetsFlyModel.Store.Airports" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Flight">
-        <PropertyRef Name="FlightId" />
-      </Principal>
-      <Dependent Role="Airport">
-        <PropertyRef Name="FlightId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -233,27 +205,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_BookingFlight_Booking">
-    <End Role="Booking" Type="LetsFlyModel.Store.Bookings" Multiplicity="1" />
-    <End Role="BookingFlight" Type="LetsFlyModel.Store.BookingFlight" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Booking">
-        <PropertyRef Name="BookingNumber" />
-      </Principal>
-      <Dependent Role="BookingFlight">
-        <PropertyRef Name="Bookings_BookingNumber" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_BookingFlight_Flight">
-    <End Role="BookingFlight" Type="LetsFlyModel.Store.BookingFlight" Multiplicity="*" />
+  <Association Name="FlightBooking">
     <End Role="Flight" Type="LetsFlyModel.Store.Flights" Multiplicity="1" />
+    <End Role="Booking" Type="LetsFlyModel.Store.Bookings" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Flight">
         <PropertyRef Name="FlightId" />
       </Principal>
-      <Dependent Role="BookingFlight">
-        <PropertyRef Name="Flights_FlightId" />
+      <Dependent Role="Booking">
+        <PropertyRef Name="FlightId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AirportFlight">
+    <End Role="Airport" Type="LetsFlyModel.Store.Airports" Multiplicity="1" />
+    <End Role="Flight" Type="LetsFlyModel.Store.Flights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airport">
+        <PropertyRef Name="AirportId" />
+      </Principal>
+      <Dependent Role="Flight">
+        <PropertyRef Name="AirportId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

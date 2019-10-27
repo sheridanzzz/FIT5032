@@ -18,24 +18,23 @@ namespace LetsFly.Models
         public Flight()
         {
             this.Bookings = new HashSet<Booking>();
-            this.Airports = new HashSet<Airport>();
         }
     
         public int FlightId { get; set; }
         public string FlightNumber { get; set; }
         public System.DateTime DepartureDate { get; set; }
         public System.DateTime ArrivalDate { get; set; }
-        public string NomimalPrice { get; set; }
+        public string Price { get; set; }
         public int Capacity { get; set; }
         public string Duration { get; set; }
         public int AirlineId { get; set; }
         public string ArrivalAirport { get; set; }
         public string DepartureAirport { get; set; }
+        public int AirportId { get; set; }
     
+        public virtual Airline Airline { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Airport> Airports { get; set; }
-        public virtual Airline Airline { get; set; }
+        public virtual Airport Airport { get; set; }
     }
 }

@@ -18,20 +18,18 @@ namespace LetsFly.Models
         public Booking()
         {
             this.Passengers = new HashSet<Passenger>();
-            this.Flights = new HashSet<Flight>();
         }
     
         public int BookingNumber { get; set; }
         public string Price { get; set; }
         public string State { get; set; }
-        public Nullable<bool> PaymentMade { get; set; }
-        public string BillingAddress { get; set; }
         public string UserId { get; set; }
+        public int FlightId { get; set; }
+        public Nullable<System.DateTime> BookingDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Passenger> Passengers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Flight> Flights { get; set; }
         public virtual User User { get; set; }
+        public virtual Flight Flight { get; set; }
     }
 }

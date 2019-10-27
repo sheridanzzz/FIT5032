@@ -10,6 +10,7 @@ using LetsFly.Models;
 
 namespace LetsFly.Controllers
 {
+    [Authorize]
     public class AirportsController : Controller
     {
         private LetsFlyModelContainer db = new LetsFlyModelContainer();
@@ -17,8 +18,7 @@ namespace LetsFly.Controllers
         // GET: Airports
         public ActionResult Index()
         {
-            var airports = db.Airports.Include(a => a.Flight);
-            return View(airports.ToList());
+            return View(db.Airports.ToList());
         }
 
         // GET: Airports/Details/5
@@ -36,19 +36,21 @@ namespace LetsFly.Controllers
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Airports/Create
         public ActionResult Create()
         {
-            ViewBag.FlightId = new SelectList(db.Flights, "FlightId", "FlightNumber");
+
             return View();
         }
 
         // POST: Airports/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AirportId,AirportName,AirportCode,AirportLocationName,AirportLong,AirportLat,FlightId")] Airport airport)
+        public ActionResult Create([Bind(Include = "AirportId,AirportName,AirportCode,AirportLocationName,AirportLong,AirportLat")] Airport airport)
         {
             if (ModelState.IsValid)
             {
@@ -57,10 +59,10 @@ namespace LetsFly.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FlightId = new SelectList(db.Flights, "FlightId", "FlightNumber", airport.FlightId);
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Airports/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -73,16 +75,17 @@ namespace LetsFly.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.FlightId = new SelectList(db.Flights, "FlightId", "FlightNumber", airport.FlightId);
+            
             return View(airport);
         }
 
         // POST: Airports/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AirportId,AirportName,AirportCode,AirportLocationName,AirportLong,AirportLat,FlightId")] Airport airport)
+        public ActionResult Edit([Bind(Include = "AirportId,AirportName,AirportCode,AirportLocationName,AirportLong,AirportLat")] Airport airport)
         {
             if (ModelState.IsValid)
             {
@@ -90,10 +93,11 @@ namespace LetsFly.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FlightId = new SelectList(db.Flights, "FlightId", "FlightNumber", airport.FlightId);
+           
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Airports/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -110,6 +114,7 @@ namespace LetsFly.Controllers
         }
 
         // POST: Airports/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

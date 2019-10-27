@@ -3,13 +3,17 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h2>Airlines</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -32,25 +36,27 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AirlineName)
-                </td>
-                <td>
-                    <img class="img-thumbnail" style="width:75px;height:75px;" src="@Url.Content("~/Uploads/" + item.AirlineImg)"/>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AirlineCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AirlineDescription)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.AirlineId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.AirlineId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.AirlineId })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AirlineName)
+            </td>
+            <td>
+                <img class="img-thumbnail" style="width:75px;height:75px;" src="@Url.Content("~/Uploads/" + item.AirlineImg)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AirlineCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AirlineDescription)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.AirlineId }) |
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new {id = item.AirlineId})
+                }
+            </td>
+        </tr>
         }
     </tbody>
 

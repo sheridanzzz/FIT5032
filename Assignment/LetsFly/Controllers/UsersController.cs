@@ -4,15 +4,35 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LetsFly.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace LetsFly.Controllers
 {
+
+    [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
         private LetsFlyModelContainer db = new LetsFlyModelContainer();
+
+
+        public ApplicationSignInManager SignInManager
+        {
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
+        }
 
         // GET: Users
         public ActionResult Index()
@@ -27,11 +47,13 @@ namespace LetsFly.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
@@ -44,9 +66,11 @@ namespace LetsFly.Controllers
         // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,FirstName,LastName,PhoneNo,UserImg,Email,DateOfBirth")] User user)
+        public ActionResult Create([Bind(Include = "UserId,FirstName,LastName,PhoneNo,UserImg,Email,DateOfBirth")]
+            User user)
         {
             if (ModelState.IsValid)
             {
@@ -59,26 +83,31 @@ namespace LetsFly.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
         // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,FirstName,LastName,PhoneNo,UserImg,Email,DateOfBirth")] User user)
+        public ActionResult Edit([Bind(Include = "UserId,FirstName,LastName,PhoneNo,UserImg,Email,DateOfBirth")]
+            User user)
         {
             if (ModelState.IsValid)
             {
@@ -86,36 +115,56 @@ namespace LetsFly.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(user);
         }
 
         // GET: Users/Delete/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = db.Users.Find(id);
 
-            
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
         // POST: Users/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
 
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var user1 = await UserManager.FindByIdAsync(id); //use async find
+                var result = await UserManager.DeleteAsync(user1);
+                if (result.Succeeded)
+                {
+                    User user = db.Users.Find(id);
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                }
+
+            }
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)

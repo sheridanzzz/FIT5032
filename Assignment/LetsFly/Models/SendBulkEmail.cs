@@ -7,13 +7,10 @@ using System.Web.Mvc;
 
 namespace LetsFly.Models
 {
-    public class SendBulkEmail
+    public class SendBulkEmail 
     {
-        //[Display(Name = "Email List")]
-        //public int EmailId { get; set; }
-        //public List<User> user { get; set; }
 
-        public List<string> EmaiList { get; set; }
+        public List<string> EmailList { get; set; }
 
         [Required(ErrorMessage = "Please enter a subject.")]
         public string Subject { get; set; }
@@ -21,5 +18,6 @@ namespace LetsFly.Models
         [Required(ErrorMessage = "Please enter the contents")]
         public string Contents { get; set; }
         public string Attachment { get; set; }
+
     }
 }

@@ -3,8 +3,13 @@ var locations = [];
 // The first step is obtain all the latitude and longitude from the HTML
 // The below is a simple jQuery selector
 $(".coordinates").each(function () {
-    var longitude = $(".longitude", this).text().trim();
-    var latitude = $(".latitude", this).text().trim();
+    //var longitude = $(".longitude", this).text().trim();
+    //var latitude = $(".latitude", this).text().trim();
+
+    var longitude = document.getElementById("longitude").value;
+    var latitude = document.getElementById("latitude").value;
+
+
     var description = $(".description", this).text().trim();
     // Create a point data structure to hold the values.
     var point = {

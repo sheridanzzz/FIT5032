@@ -31,12 +31,65 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Flight", "About", "Home")</li>
-                <li>@Html.ActionLink("Booking", "Contact", "Home")</li>
-                <li>@Html.ActionLink("Airline", "Index", "Airlines")</li>
-                <li>@Html.ActionLink("Airport", "Index", "Airports")</li>
-                <li>@Html.ActionLink("Rating", "Create", "Ratings")</li>
-                <li>@Html.ActionLink("Send Email", "Send_Email", "Home")</li>
+                @if (!User.IsInRole("Administrator"))
+                {
+                    <li>@Html.ActionLink("Search Flights", "Flight", "Home")</li>
+
+                    <li>@Html.ActionLink("View Bookings", "Index", "Bookings")</li>
+
+                    <li>@Html.ActionLink("View Airlines", "Index", "Airlines")</li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Ratings<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("View Ratings", "Index", "Ratings")</li>
+                            <li>@Html.ActionLink("Give Rating", "Create", "Ratings")</li>
+                        </ul>
+                    </li>
+                    
+                }
+                @if (User.IsInRole("Administrator"))
+                {
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Airlines<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("View Airlines", "Index", "Airlines")</li>
+                            <li>@Html.ActionLink("Create Airlines", "Create", "Airlines")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Airports<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("View Airports", "Index", "Airports")</li>
+                            <li>@Html.ActionLink("Create Airports", "Create", "Airports")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Users<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("View Users", "Index", "Users")</li>
+                            <li>@Html.ActionLink("Send Email", "Send_Email", "Home")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Flights<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("View Flights", "Index", "Flights")</li>
+                            <li>@Html.ActionLink("Create Flights", "Create", "Flights")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Bookings<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("View bookings", "view", "Bookings")</li>
+                            
+                        </ul>
+                    </li>
+                }
+                @*<li>@Html.ActionLink("Airport", "Index", "Airports")</li>*@
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
